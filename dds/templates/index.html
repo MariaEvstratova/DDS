@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Записи о движении денежных средств</h1>
+    <div>
+        Автор: Евстратова Мария
+    </div>
+    <br>
+    <a href="/rec" class="btn btn-secondary">Добавить запись</a>
+    <br><br>
+    <h1>Список записей о движении денежных средств:</h1>
+    <br>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.id.label }}<br>
+            {{ form.id(class="form-control") }}<br>
+            {% for error in form.id.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        {{ message }}
+    </form>
+    {% if user %}
+        <h3>{{ user.name }}</h3>
+        <div>
+            {% for rec in sent_recs %}
+                <div class="col-md6 border rounded">
+                <div style="font-size: 20px">
+                    </div>
+                    <div style="font-size: 20px">
+                         Дата создания записи - {{ rec.send_time }}
+                    </div>
+                    <div style="font-size: 20px">
+                        Статус публикации - {{ rec.rec_status }}
+                    </div>
+
+                    {% if is_auth %}
+                    <div>
+                        <a href="/users/{{ user.user_id }}/status/{{ rec.rec_id }}" class="btn btn-warning">
+                            Изменить
+                        </a>
+                        <a href="/users/{{ user.user_id }}/stat_delete/{{ rec.rec_id }}" class="btn btn-danger">
+                            Удалить
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}
