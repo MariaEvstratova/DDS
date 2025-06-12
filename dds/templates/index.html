@@ -2,56 +2,54 @@
 
 {% block content %}
 
-    <h1>Записи о движении денежных средств</h1>
-    <div>
-        Автор: Евстратова Мария
+<h1>Тестовое задание</h1>
+<div>
+    Автор: Евстратова Мария
+</div>
+<br>
+<h1>Список записей о движении денежных средств:</h1>
+<a href="/rec" class="btn btn-secondary">Добавить запись</a>
+<br><br>
+<div>
+    {% for operation in operations %}
+    <div style="font-size: 40px">
+        Запись {{ operation.id }}
     </div>
-    <br>
-    <a href="/rec" class="btn btn-secondary">Добавить запись</a>
-    <br><br>
-    <h1>Список записей о движении денежных средств:</h1>
-    <br>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.id.label }}<br>
-            {{ form.id(class="form-control") }}<br>
-            {% for error in form.id.errors %}
-                <p class="alert alert-danger" role="alert">
-                    {{ error }}
-                </p>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-        {{ message }}
-    </form>
-    {% if user %}
-        <h3>{{ user.name }}</h3>
-        <div>
-            {% for rec in sent_recs %}
-                <div class="col-md6 border rounded">
-                <div style="font-size: 20px">
-                    </div>
-                    <div style="font-size: 20px">
-                         Дата создания записи - {{ rec.send_time }}
-                    </div>
-                    <div style="font-size: 20px">
-                        Статус публикации - {{ rec.rec_status }}
-                    </div>
-
-                    {% if is_auth %}
-                    <div>
-                        <a href="/users/{{ user.user_id }}/status/{{ rec.rec_id }}" class="btn btn-warning">
-                            Изменить
-                        </a>
-                        <a href="/users/{{ user.user_id }}/stat_delete/{{ rec.rec_id }}" class="btn btn-danger">
-                            Удалить
-                        </a>
-                    </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
+    <div class="col-md6 border rounded">
+        <div style="font-size: 20px">
         </div>
-    {% endif %}
-  {% endif %}
+        <div style="font-size: 20px">
+            Дата создания записи - {{ operation.operation_date }}
+        </div>
+        <div style="font-size: 20px">
+            Статус публикации - {{ operation.status }}
+        </div>
+        <div style="font-size: 20px">
+            Тип операции - {{ operation.operation_type }}
+        </div>
+        <div style="font-size: 20px">
+            Категория - {{ operation.category }}
+        </div>
+        <div style="font-size: 20px">
+            Подкатегория - {{ operation.subcategory }}
+        </div>
+        <div style="font-size: 20px">
+            Сумма - {{ operation.amount }}р.
+        </div>
+        {% if operation.comment != '' %}
+        <div style="font-size: 20px">
+            Комментарий - {{ operation.comment }}
+        </div>
+        {% endif %}
+        <div>
+            <a href="/users/{{ user.user_id }}/status/{{ rec.rec_id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="/users/{{ user.user_id }}/stat_delete/{{ rec.rec_id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
