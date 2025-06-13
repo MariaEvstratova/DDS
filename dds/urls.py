@@ -20,7 +20,8 @@ from . import views
 
 urlpatterns = [
     path("", views.index),
-    path("add_operation/<int:id>/", views.add_operation),
-    path("delete_operation/<int:id>/", views.delete_operation),
+    path("edit_operation/<int:id>", views.edit_operation),
+    path("add_operation", views.add_operation),
+    # path("delete_operation/<int:id>/", views.delete_operation),
     path('admin/', admin.site.urls),
 ]
