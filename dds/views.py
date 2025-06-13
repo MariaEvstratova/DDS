@@ -79,3 +79,25 @@ def dicts(request):
                                           "categories": category,
                                           "subcategories": subcategory})
 
+def delete_status(request, id):
+    status = Status.objects.get(id=id)
+    status.delete()
+    return redirect('/')
+
+
+def delete_operation_type(request, id):
+    operation_type = OperationType.objects.get(id=id)
+    operation_type.delete()
+    return redirect('/')
+
+
+def delete_category(request, id):
+    category = Category.objects.get(id=id)
+    category.delete()
+    return redirect('/')
+
+
+def delete_subcategory(request, id):
+    subcategory = SubCategory.objects.get(id=id)
+    subcategory.delete()
+    return redirect('/')

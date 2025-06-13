@@ -19,10 +19,10 @@
             {{ status.id }} - {{ status.name }}
         </div>
         <div>
-            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+            <a href="/edit_status/{{ status.id }}" class="btn btn-warning">
                 Изменить
             </a>
-            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+            <a href="delete_status/{{ status.id }}" class="btn btn-danger">
                 Удалить
             </a>
         </div>
@@ -41,10 +41,10 @@
 
         </div>
         <div>
-            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+            <a href="/edit_operation_type/{{ type.id }}" class="btn btn-warning">
                 Изменить
             </a>
-            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+            <a href="delete_operation_type/{{ type.id }}" class="btn btn-danger">
                 Удалить
             </a>
         </div>
@@ -63,10 +63,10 @@
             Тип операции - {{ category.operation_type }}
         </div>
         <div>
-            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+            <a href="/edit_category/{{ category.id }}" class="btn btn-warning">
                 Изменить
             </a>
-            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+            <a href="delete_category/{{ category.id }}" class="btn btn-danger">
                 Удалить
             </a>
         </div>
@@ -74,7 +74,7 @@
     {% endfor %}
     <br>
     <h2>Подкатегории:</h2>
-    <a href="add_operation" class="btn btn-secondary">Добавить подкатегоорию</a>
+    <a href="add_operation" class="btn btn-secondary">Добавить подкатегорию</a>
     <br>
     {% for subcategory in subcategories %}
     <div class="col-md6 border rounded">
@@ -85,10 +85,10 @@
             Категория - {{ subcategory.category }}
         </div>
         <div>
-            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+            <a href="/edit_subcategory/{{ subcategory.id }}" class="btn btn-warning">
                 Изменить
             </a>
-            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+            <a href="delete_subcategory/{{ subcategory.id }}" class="btn btn-danger">
                 Удалить
             </a>
         </div>
