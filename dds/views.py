@@ -67,3 +67,15 @@ def delete_operation(request, id):
     operation = MoneyOperation.objects.get(id=id)
     operation.delete()
     return redirect('/')
+
+
+def dicts(request):
+    status = Status.objects.all()
+    operation_type = OperationType.objects.all()
+    category = Category.objects.all()
+    subcategory = SubCategory.objects.all()
+    return render(request, "dicts.html", {"statuses": status,
+                                          "operation_type": operation_type,
+                                          "categories": category,
+                                          "subcategories": subcategory})
+

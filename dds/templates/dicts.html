@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Тестовое задание</h1>
+<div>
+    Автор: Евстратова Мария
+</div>
+<br>
+<h1>Справочник</h1>
+<br>
+<div>
+    <h2>Cтатусы:</h2>
+    <a href="add_operation" class="btn btn-secondary">Добавить статус</a>
+    <br>
+    {% for status in statuses %}
+    <div class="col-md6 border rounded">
+        <div style="font-size: 30px">
+            {{ status.id }} - {{ status.name }}
+        </div>
+        <div>
+            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <h2>Типы операций:</h2>
+    <a href="add_operation" class="btn btn-secondary">Добавить тип</a>
+    <br>
+    {% for type in operation_type %}
+    <div class="col-md6 border rounded">
+        <div style="font-size: 30px">
+            {{ type.id }} - {{ type.name }}
+        </div>
+        <div style="font-size: 20px">
+
+        </div>
+        <div>
+            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <h2>Категории:</h2>
+    <a href="add_operation" class="btn btn-secondary">Добавить категорию</a>
+    <br>
+    {% for category in categories %}
+    <div class="col-md6 border rounded">
+        <div style="font-size: 30px">
+            {{ category.id }} - {{ category.name }}
+        </div>
+        <div style="font-size: 20px">
+            Тип операции - {{ category.operation_type }}
+        </div>
+        <div>
+            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <h2>Подкатегории:</h2>
+    <a href="add_operation" class="btn btn-secondary">Добавить подкатегоорию</a>
+    <br>
+    {% for subcategory in subcategories %}
+    <div class="col-md6 border rounded">
+        <div style="font-size: 30px">
+            {{ subcategory.id }} - {{ subcategory.name }}
+        </div>
+        <div style="font-size: 20px">
+            Категория - {{ subcategory.category }}
+        </div>
+        <div>
+            <a href="/edit_operation/{{ operation.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="delete_operation/{{ operation.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
