@@ -2,6 +2,7 @@ from django import forms
 from .models import MoneyOperation, Status, OperationType, Category, SubCategory
 
 
+# Форма добавления операции ддс
 class MoneyOperationForm(forms.Form):
     operation_date = forms.DateField(
         label='Дата операции',
@@ -40,6 +41,8 @@ class MoneyOperationForm(forms.Form):
         required=False
     )
 
+
+    # Обновление данных из instance
     def __init__(self, *args, **kwargs):
         instance = kwargs.pop('instance', None)
         super().__init__(*args, **kwargs)
@@ -52,20 +55,3 @@ class MoneyOperationForm(forms.Form):
             self.fields['subcategory'].initial = instance.subcategory
             self.fields['amount'].initial = instance.amount
             self.fields['comment'].initial = instance.comment
-            # Динамически заполняем queryset для зависимых полей
-        #     if instance.operation_type:
-        #         self.fields['category'].queryset = Category.objects.filter(
-        #             operation_type=instance.operation_type
-        #         )
-        #     if instance.category:
-        #         self.fields['subcategory'].queryset = SubCategory.objects.filter(
-        #             category=instance.category
-        #         )
-        #
-        # # Добавляем обработчики изменений для динамического обновления полей
-        # self.fields['operation_type'].widget.attrs.update({
-        #     'onchange': 'updateCategories()'
-        # })
-        # self.fields['category'].widget.attrs.update({
-        #     'onchange': 'updateSubcategories()'
-        # })

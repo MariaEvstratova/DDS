@@ -1,6 +1,7 @@
 from django.db import models
 
 
+# Модель статуса
 class Status(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -8,6 +9,7 @@ class Status(models.Model):
         return self.name
 
 
+# Модель типа операции
 class OperationType(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -15,6 +17,7 @@ class OperationType(models.Model):
         return self.name
 
 
+# Модель категории
 class Category(models.Model):
     name = models.CharField(max_length=100)
     operation_type = models.ForeignKey(OperationType, on_delete=models.CASCADE)
@@ -26,6 +29,7 @@ class Category(models.Model):
         return f"{self.name} ({self.operation_type})"
 
 
+# Модель подкатегории
 class SubCategory(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -37,6 +41,7 @@ class SubCategory(models.Model):
         return f"{self.name} ({self.category})"
 
 
+# Модель операции ддс
 class MoneyOperation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     operation_date = models.DateField()
