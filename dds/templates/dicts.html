@@ -11,7 +11,7 @@
 <br>
 <div>
     <h2>Cтатусы:</h2>
-    <a href="add_operation" class="btn btn-secondary">Добавить статус</a>
+    <a href="add_status" class="btn btn-secondary">Добавить статус</a>
     <br>
     {% for status in statuses %}
     <div class="col-md6 border rounded">
@@ -30,7 +30,7 @@
     {% endfor %}
     <br>
     <h2>Типы операций:</h2>
-    <a href="add_operation" class="btn btn-secondary">Добавить тип</a>
+    <a href="add_operation_type" class="btn btn-secondary">Добавить тип</a>
     <br>
     {% for type in operation_type %}
     <div class="col-md6 border rounded">
@@ -52,7 +52,7 @@
     {% endfor %}
     <br>
     <h2>Категории:</h2>
-    <a href="add_operation" class="btn btn-secondary">Добавить категорию</a>
+    <a href="add_category" class="btn btn-secondary">Добавить категорию</a>
     <br>
     {% for category in categories %}
     <div class="col-md6 border rounded">
@@ -74,7 +74,7 @@
     {% endfor %}
     <br>
     <h2>Подкатегории:</h2>
-    <a href="add_operation" class="btn btn-secondary">Добавить подкатегорию</a>
+    <a href="add_subcategory" class="btn btn-secondary">Добавить подкатегорию</a>
     <br>
     {% for subcategory in subcategories %}
     <div class="col-md6 border rounded">

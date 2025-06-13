@@ -63,12 +63,28 @@ class StatusForm(forms.Form):
         label='Статус'
     )
 
+    # Обновление данных из instance
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.pop('instance', None)
+        super().__init__(*args, **kwargs)
+
+        if instance:
+            self.fields['status'].initial = instance.name
+
 
 # Форма добавления типа операции
 class OperationTypeForm(forms.Form):
     operation_type = forms.CharField(
         label='Тип операции'
     )
+
+    # Обновление данных из instance
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.pop('instance', None)
+        super().__init__(*args, **kwargs)
+
+        if instance:
+            self.fields['operation_type'].initial = instance.name
 
 
 # Форма добавления категории
@@ -88,7 +104,7 @@ class CategoryForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         if instance:
-            self.fields['category'].initial = instance.category
+            self.fields['category'].initial = instance.name
             self.fields['operation_type'].initial = instance.operation_type
 
 
@@ -109,6 +125,6 @@ class SubCategoryForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         if instance:
-            self.fields['subcategory'].initial = instance.subcategory
+            self.fields['subcategory'].initial = instance.name
             self.fields['category'].initial = instance.category
 
