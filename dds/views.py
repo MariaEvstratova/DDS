@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-# from .forms import UserForm
 from dds.models import MoneyOperation
 from dds.forms import MoneyOperationForm
 from dds.models import Status
@@ -40,7 +39,7 @@ def add_operation(request):
 
 def edit_operation(request, id):
     if request.method == "POST":
-        operation = Status.objects.get(id=id)
+        operation = MoneyOperation.objects.get(id=id)
         operation.operation_date = request.POST.get("operation_date")
         operation.status = Status.objects.get(id=int(request.POST.get("status")))
         operation.operation_type = OperationType.objects.get(id=int(request.POST.get("operation_type")))
@@ -49,35 +48,15 @@ def edit_operation(request, id):
         operation.amount = request.POST.get("amount")
         operation.comment = request.POST.get("comment")
         operation.save()
-        # operation = MoneyOperation(operation_date=operation_date,
-        #                            status=status,
-        #                            operation_type=operation_type,
-        #                            category=category,
-        #                            subcategory=subcategory,
-        #                            amount=amount,
-        #                            comment=comment)
         return redirect('/')
     else:
         operation = MoneyOperation.objects.get(id=id)
-        initial_data = {"operation_date": operation.operation_date,
-                        "status": operation.status.name,
-                        "operation_type": operation.operation_type.name,
-                        "category": operation.category.name,
-                        "subcategory": operation.subcategory.name,
-                        "amount": operation.amount,
-                        "comment": operation.comment}
-        moneyoperationform = MoneyOperationForm(initial=initial_data)
-        # moneyoperationform.operation_date.data = operation.operation_date
-        # moneyoperationform.status.value = operation.status
-        # moneyoperationform.operation_type.value = operation.operation_type
-        # moneyoperationform.category.value = operation.category
-        # moneyoperationform.subcategory.value = operation.subcategory
-        # moneyoperationform.amount.value = operation.amount
-        # moneyoperationform.comment.value = operation.comment
+        moneyoperationform = MoneyOperationForm(instance=operation)
         return render(request, "rec.html", {"title": 'Изменение записи о движении денежных средств', "form": moneyoperationform})
 
-#
-# def delete_operation(request):
-#     moneyoperations = MoneyOperation.objects.all()
-#     return render(request, "rec.html", {"operations": moneyoperations})
+
+def delete_operation(request, id):
+    operation = MoneyOperation.objects.get(id=id)
+    operation.delete()
+    return redirect('/')
 

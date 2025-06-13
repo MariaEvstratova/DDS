@@ -1,57 +1,71 @@
 from django import forms
-from dds.models import Status
-from dds.models import OperationType
-from dds.models import Category
-from dds.models import SubCategory
-
-# class Status(forms.Form):
-#     name = forms.CharField(max_length=100)
-#
-#
-#
-# class OperationType(forms.Form):
-#     name = forms.CharField(max_length=100)
-#
-#
-# class Category(forms.Form):
-#     name = forms.CharField(max_length=100)
-#     operation_type = forms.ForeignKey(OperationType, on_delete=models.CASCADE)
-#
-#
-# class SubCategory(forms.Form):
-#     name = forms.CharField(max_length=100)
-#     category = forms.ForeignKey(Category, on_delete=models.CASCADE)
+from .models import MoneyOperation, Status, OperationType, Category, SubCategory
 
 
 class MoneyOperationForm(forms.Form):
-    operation_date = forms.DateField()
-    status_choices = [(status.id, status.name) for status in Status.objects.all()]
-
-    status = forms.ChoiceField(
-        choices=status_choices,
-        label="Статус операции",
-        widget=forms.Select(attrs={'class': 'form-control'})
+    operation_date = forms.DateField(
+        label='Дата операции',
+        widget=forms.DateInput(attrs={'type': 'date'})
     )
-    operation_type_choices = [(type.id, type.name) for type in OperationType.objects.all()]
 
-    operation_type = forms.ChoiceField(
-        choices=operation_type_choices,
-        label="Тип операции",
-        widget=forms.Select(attrs={'class': 'form-control'})
+    status = forms.ModelChoiceField(
+        queryset=Status.objects.all(),
+        label='Статус'
     )
-    category_choices = [(category.id, category.name) for category in Category.objects.all()]
 
-    category = forms.ChoiceField(
-        choices=category_choices,
-        label="Категория",
-        widget=forms.Select(attrs={'class': 'form-control'})
+    operation_type = forms.ModelChoiceField(
+        queryset=OperationType.objects.all(),
+        label='Тип операции'
     )
-    subcategory_choices = [(subcategory.id, subcategory.name) for subcategory in SubCategory.objects.all()]
 
-    subcategory = forms.ChoiceField(
-        choices=subcategory_choices,
-        label="Подкатегория",
-        widget=forms.Select(attrs={'class': 'form-control'})
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        label='Категория'
     )
-    amount = forms.DecimalField(max_digits=12, decimal_places=2)
-    comment = forms.CharField(widget=forms.Textarea, required=False)
+
+    subcategory = forms.ModelChoiceField(
+        queryset=SubCategory.objects.all(),
+        label='Подкатегория'
+    )
+
+    amount = forms.DecimalField(
+        label='Сумма',
+        max_digits=12,
+        decimal_places=2
+    )
+
+    comment = forms.CharField(
+        label='Комментарий',
+        widget=forms.Textarea,
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.pop('instance', None)
+        super().__init__(*args, **kwargs)
+
+        if instance:
+            self.fields['operation_date'].initial = instance.operation_date
+            self.fields['status'].initial = instance.status
+            self.fields['operation_type'].initial = instance.operation_type
+            self.fields['category'].initial = instance.category
+            self.fields['subcategory'].initial = instance.subcategory
+            self.fields['amount'].initial = instance.amount
+            self.fields['comment'].initial = instance.comment
+            # Динамически заполняем queryset для зависимых полей
+        #     if instance.operation_type:
+        #         self.fields['category'].queryset = Category.objects.filter(
+        #             operation_type=instance.operation_type
+        #         )
+        #     if instance.category:
+        #         self.fields['subcategory'].queryset = SubCategory.objects.filter(
+        #             category=instance.category
+        #         )
+        #
+        # # Добавляем обработчики изменений для динамического обновления полей
+        # self.fields['operation_type'].widget.attrs.update({
+        #     'onchange': 'updateCategories()'
+        # })
+        # self.fields['category'].widget.attrs.update({
+        #     'onchange': 'updateSubcategories()'
+        # })
